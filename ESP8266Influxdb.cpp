@@ -5,10 +5,10 @@
 //#define DEBUG_PRINT // comment this line to disable debug print
 
 #ifndef DEBUG_PRINT
-#define DEBUG_PRINT(a)
+	#define DEBUG_PRINT(a)
 #else
-#define DEBUG_PRINT(a) (Serial.println(String(F("[Debug]: "))+(a)))
-#define _DEBUG
+	#define DEBUG_PRINT(a) (Serial.println(String(F("[Debug]: "))+(a)))
+ 	#define _DEBUG
 #endif
 
 Influxdb::Influxdb(const char *host, uint16_t port) : WiFiClient() {
@@ -36,8 +36,7 @@ DB_RESPONSE Influxdb::write(String data) {
                 return _response;
         }
         String postHead = "POST /write?" + _db + " HTTP/1.1\r\n";
-        // postHead += "Host: " + localIP().toString() + ":" +
-        // localPort() + "\r\n";
+        postHead += "Host: " + String(_host) + ":" + String(_port)+ "\r\n";
         // postHead += "Content-Type: application/x-www-form-urlencoded\r\n";
         postHead += "Content-Length: " + String(data.length()) + "\r\n\r\n";
 
